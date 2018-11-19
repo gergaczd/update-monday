@@ -11,11 +11,7 @@ module.exports = class Changelog {
   }
 
   async requestAll() {
-    const changelogRequests = this._packages.map(({ name }) => {
-      return changelog.generate(name, 'all');
-    });
-
-    const changelogs = await Promise.all(changelogRequests);
+    const changelogs = await this._requestChangelogs();
 
     const packageChangelogs = this._packages.map(({ name }, index) => {
       return { [name]: changelogs[index] };
@@ -38,6 +34,14 @@ module.exports = class Changelog {
     });
   }
 
+  async _requestChangelogs() {
+    const changelogRequests = this._packages.map(({ name }) => {
+      return changelog.generate(name, 'all');
+    });
+
+    return await Promise.all(changelogRequests);
+  }
+
   _getActualChanges({ name, versions }) {
     const changes = this._changelogs[name];
 
@@ -47,7 +51,3 @@ module.exports = class Changelog {
     return changes.versions.slice(latestIndex, currentIndex);
   }
 };
-///Changelog.md
-///CHANGELOG.md
-///History.md
-///HISTORY.md
