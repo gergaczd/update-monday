@@ -9,7 +9,7 @@ module.exports = {
       return;
     }
 
-    const packageJson = require(`${folder}package.json`);
+    const packageJson = require(`${__dirname}/../${folder}package.json`);
 
     packagesToUpdate.forEach(({ name, version }) => {
       packageJson.dependencies[name]

@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/gergaczd/update-monday#readme",
   "dependencies": {
+    "axios": "0.18.0",
     "chalk": "2.4.1",
     "changelog": "1.4.2",
     "date-fns": "1.29.0",
-    "enquirer": "2.0.7",
+    "opn": "5.4.0",
+    "prompts": "1.2.1",
     "yargs": "12.0.4"
   }
 }

@@ -3,6 +3,8 @@
 const changelog = require('changelog');
 const chalk = require('chalk');
 const { distanceInWordsToNow } = require('date-fns');
+const axios = require('axios');
+const opn = require('opn');
 
 module.exports = class Changelog {
   constructor(packages) {
@@ -22,10 +24,33 @@ module.exports = class Changelog {
     }, {});
   }
 
+  async checkChangelogFiles(name) {
+    console.log('\n\n');
+    const changes = this._changelogs[name];
+    const baseUrl = `${changes.project.repository}/blob/master/`;
+    const commonChangelogUrls = [
+      'History.md', 'history.md', 'CHANGELOG.md', 'Changelog.md', 'changelog.md'
+    ].map(file => `${baseUrl}${file}`);
+
+    const option = { validateStatus(status) { return status < 500; } };
+    const responses = await Promise.all(commonChangelogUrls
+      .map(url => axios.get(url, option))
+    );
+
+    const index = responses.map(response => response.status).indexOf(200);
+
+    console.log(`- Releases: ${chalk.blue(`${changes.project.repository}/releases`)}`);
+
+    if (index > -1) {
+      console.log(`- Changelog: ${chalk.blue(commonChangelogUrls[index])}`);
+      opn(commonChangelogUrls[index]);
+    }
+  }
+
   show({ name, versions }) {
     const changes = this._changelogs[name];
 
-    console.log(`\n\n- Repository: ${chalk.blue(changes.project.repository)}`);
+    console.log(`- Repository: ${chalk.blue(changes.project.repository)}`);
 
     const actualChanges = this._getActualChanges({ name, versions });
 

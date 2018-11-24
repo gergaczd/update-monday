@@ -10,5 +10,9 @@ module.exports = {
     return Object.entries(packages).map(([name, versions]) => {
       return { name, versions };
     });
+  },
+
+  async installPackages(projectFolder) {
+    await command(`cd ${projectFolder} && npm install`);
   }
 };

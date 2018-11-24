@@ -13,7 +13,8 @@ module.exports = async (folder) => {
 
   let allAnswers = {};
 
-  for(let packageToCheck of packages) {
+  for (let packageToCheck of packages) {
+    await changelog.checkChangelogFiles(packageToCheck.name);
     changelog.show(packageToCheck);
     const answer = await shouldUpdatePackage(packageToCheck);
 
