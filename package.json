@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/gergaczd/update-monday/issues"
   },
+  "bin": {
+    "um": "./check.js"
+  },
   "homepage": "https://github.com/gergaczd/update-monday#readme",
   "dependencies": {
     "axios": "0.18.0",
