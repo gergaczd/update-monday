@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 'use strict';
 
-const checkProject = require('./check-project');
-const { updatePackages } = require('./modules/package-json');
-const command = require('./modules/command');
+const checkProject = require('./lib/check-project');
+const { updatePackages } = require('./lib/modules/package-json');
+const command = require('./lib/modules/command');
 
-const flags = require('./modules/cli-flags');
+const flags = require('./lib/modules/cli-flags');
 const { folders, install } = flags.check();
 
 (async () => {
