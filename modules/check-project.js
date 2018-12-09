@@ -1,19 +1,9 @@
 'use strict';
 
 const Changelog = require('./changelog/changelog');
-const command = require('./command');
 const question = require('./question');
-const { omit } = require('lodash');
 
-module.exports = async (folder, { open }) => {
-  console.log(`check project: ${folder}`);
-
-  const packages = await command.outdatedPackages(folder);
-
-  console.table(packages.map(({ name, versions }) => {
-    return { name, ...omit(versions, ['location']) };
-  }));
-
+module.exports = async (packages, { open }) => {
   const changelog = new Changelog(packages);
   await changelog.requestChanges();
 

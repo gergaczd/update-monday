@@ -17,7 +17,7 @@ module.exports = {
     this._validateResponse(name, response);
 
     return response;
-  }
+  },
 
   _validateResponse(name, response) {
     if (!response.hasOwnProperty(name)) {

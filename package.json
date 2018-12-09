@@ -16,7 +16,7 @@
     "url": "https://github.com/gergaczd/update-monday/issues"
   },
   "bin": {
-    "um": "./check.js"
+    "um": "./update.js"
   },
   "homepage": "https://github.com/gergaczd/update-monday#readme",
   "dependencies": {

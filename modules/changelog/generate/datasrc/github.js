@@ -6,7 +6,7 @@ const parse = require('github-url-from-git');
 const removeSlash = (path) => path.replace(/^\//g, '');
 
 const normalizeGithubUrl = (repo) => {
-  const githubUrl = repo.startsWith('github.com') ? repo : 'https://github.com/' + repo;
+  const githubUrl = repo.includes('github.com') ? repo : 'https://github.com/' + repo;
   const parsedUrl = parse(githubUrl);
 
   return parsedUrl || githubUrl;
