@@ -1,23 +1,21 @@
 #!/usr/bin/env node
 'use strict';
 
-const checkProject = require('./lib/check-project');
-const { updatePackages } = require('./lib/modules/package-json');
-const command = require('./lib/modules/command');
-const { resolveFlags } = require('./lib/modules/cli-flags');
+const checkProject = require('./modules/check-project');
+const { updatePackages } = require('./modules/package-json');
+const command = require('./modules/command');
+const flags = require('./lib/parse-cli')();
 const { uniqWith, omit } = require('lodash');
 const { isDeepStrictEqual } = require('util');
-
-const { folders, install } = resolveFlags();
 
 (async () => {
   try {
     let packageInformations = [];
-    for (let folder of folders) {
-      const packages = await checkProject(folder);
+    for (let folder of flags.folders) {
+      const packages = await checkProject(folder, flags);
       await updatePackages(folder, packages);
 
-      install && await command.installPackages(folder);
+      flags.install && await command.installPackages(folder);
 
       packageInformations = uniqWith(packageInformations.concat(packages), (first, second) => {
         return isDeepStrictEqual(omit(first, ['update']), omit(second, ['update']));

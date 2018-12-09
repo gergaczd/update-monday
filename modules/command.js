@@ -1,6 +1,6 @@
 'use strict';
 
-const { execute } = require('../execute-command');
+const { execute } = require('../lib/execute-command');
 
 module.exports = {
   async outdatedPackages(projectFolder) {

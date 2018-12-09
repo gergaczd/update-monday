@@ -7,11 +7,13 @@ const readFile = promisify(fs.readFile);
 
 module.exports = {
   async updatePackages(folder, packages) {
+    const filePath = `${folder}package.json`;
     if (packages.length === 0) {
       return;
     }
 
-    const packageJson = JSON.parse(await readFile(`${folder}package.json`, 'utf8'));
+    const rawPackageJson = await readFile(filePath, 'utf8');
+    const packageJson = JSON.parse(rawPackageJson);
 
     packages
       .filter(({ update }) => update)
@@ -21,6 +23,7 @@ module.exports = {
           : packageJson.devDependencies[name] = version;
       });
 
-    await writeFile(`${folder}package.json`, JSON.stringify(packageJson, null, 2), 'utf8');
+    const updatedRawPackageJson = JSON.stringify(packageJson, null, 2);
+    await writeFile(filePath, updatedRawPackageJson, 'utf8');
   }
 };
