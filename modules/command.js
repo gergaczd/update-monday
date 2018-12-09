@@ -1,6 +1,6 @@
 'use strict';
 
-const { execute } = require('../lib/execute-command');
+const { execute, executeLive } = require('../lib/execute-command');
 
 module.exports = {
   async outdatedPackages(projectFolder) {
@@ -13,6 +13,15 @@ module.exports = {
   },
 
   async installPackages(projectFolder) {
-    await execute(`cd ${projectFolder} && npm install`);
+    await executeLive(`cd ${projectFolder} && npm install`);
+  },
+
+  async runTest(projectFolder) {
+    try {
+      await executeLive(`cd ${projectFolder} && npm test`);
+      return true;
+    } catch(error) {
+      return false;
+    }
   }
 };
