@@ -1,13 +1,8 @@
 'use strict';
 
-const chalk = require('chalk');
 const emoji = require('node-emoji');
 const { distanceInWordsToNow } = require('date-fns');
-
-const format = {
-  link: (link) => chalk.underline.bold.magenta(link),
-  version: (version) => chalk.dim(version)
-};
+const format = require('../../lib/display-fomat');
 
 class DisplayChanges {
 
@@ -26,7 +21,7 @@ class DisplayChanges {
     const { latestVersion, name } = this._options;
 
     console.log('\n\n');
-    console.log(chalk.bold(emoji.get('package') + ' ' + name + '@' + latestVersion + ':'));
+    console.log(format.bold(emoji.get('package') + ' ' + name + '@' + latestVersion + ':'));
   }
 
   _displayLinks() {
