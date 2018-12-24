@@ -33,8 +33,12 @@ module.exports = async (folder, { install, open, test, store }) => {
   }
 
   if (install && test) {
-    stepMarker.runningTests();
-    const isTestSuccessed = await command.runTest(folder);
+    let isTestSuccessed = false;
+    do {
+      stepMarker.runningTests();
+      isTestSuccessed = await command.runTest(folder);
+    } while (!isTestSuccessed && await question.shouldRunTestsAgain());
+
     const shouldRollback = !isTestSuccessed && await question.shouldRollbackUpdate();
 
     if (shouldRollback) {
