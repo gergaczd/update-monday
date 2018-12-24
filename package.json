@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --opts ./mocha.opts './**/*.spec.js'",
+    "test:watch": "npm t -- --watch"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "dependencies": {
     "axios": "0.18.0",
     "chalk": "2.4.1",
+    "configstore": "4.0.0",
     "date-fns": "1.29.0",
     "github-url-from-git": "1.5.0",
     "lodash": "4.17.11",
@@ -30,5 +32,11 @@
     "prompts": "1.2.1",
     "semver": "5.6.0",
     "yargs": "12.0.4"
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "mocha": "5.2.0",
+    "sinon": "7.2.2",
+    "sinon-chai": "3.3.0"
   }
 }

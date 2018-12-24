@@ -6,10 +6,8 @@ const flags = require('./lib/parse-cli')();
 
 (async () => {
   try {
-    let updatedPackages = [];
     for (let folder of flags.folders) {
-      const packages = await updateProject(folder, flags);
-      updatedPackages = updatedPackages.concat(packages);
+      await updateProject(folder, flags);
     }
   } catch (error) {
     console.log(error.name + ': ' + error.message);

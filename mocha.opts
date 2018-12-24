@@ -1,0 +1,5 @@
+--exclude './node_modules/**'
+--file test-config/setup.js
+--reporter dot
+--colors
+--exit
