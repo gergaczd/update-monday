@@ -17,7 +17,8 @@
     "url": "https://github.com/gergaczd/update-monday/issues"
   },
   "bin": {
-    "um": "./update.js"
+    "um": "./update.js",
+    "um-config": "./config.js"
   },
   "homepage": "https://github.com/gergaczd/update-monday#readme",
   "dependencies": {
@@ -31,6 +32,7 @@
     "opn": "5.4.0",
     "prompts": "1.2.1",
     "semver": "5.6.0",
+    "update-notifier": "2.5.0",
     "yargs": "12.0.4"
   },
   "devDependencies": {

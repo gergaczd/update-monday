@@ -1,14 +1,8 @@
 'use strict';
 
-const ConfigStore = require('configstore');
-const pkg = require('../package');
 const { pick } = require('lodash');
 const filterWithinRange = require('./filter-within-range');
-
-const packageStore = new ConfigStore(pkg.name, {
-  config: {},
-  packages: {}
-});
+const packageStore = require('./store');
 
 module.exports = class {
   static registerPackage(packageName, metaInformation) {
