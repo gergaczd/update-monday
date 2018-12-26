@@ -53,22 +53,32 @@ const validateResponse = (data, url, moduleName) => {
 
 module.exports = {
   async packageHistory(moduleName) {
-    const url = 'http://registry.npmjs.org/' + moduleName.replace('/', '%2F');
-    const { data } = await axios.get(url);
+    try {
+      const url = 'http://registry.npmjs.org/' + moduleName.replace('/', '%2F');
+      const { data } = await axios.get(url);
 
-    validateResponse(data, url, moduleName);
+      validateResponse(data, url, moduleName);
 
-    const repo = findRepoRecursively(data);
+      const repo = findRepoRecursively(data);
 
-    const time = omit(data.time, ['created', 'modified']);
+      const time = omit(data.time, ['created', 'modified']);
 
-    const versions = Object.keys(time)
-      .filter((version) => semver.valid(version))
-      .map((version) => {
-        return { version, date: new Date(time[version]) };
-      })
-      .sort(sortDate);
+      const versions = Object.keys(time)
+        .filter((version) => semver.valid(version))
+        .map((version) => {
+          return { version, date: new Date(time[version]) };
+        })
+        .sort(sortDate);
 
-    return { repo, versions };
+      return { repo, versions };
+    } catch (error) {
+      if (error.response.status === 404) {
+        console.log(`${moduleName} is not found on npm or it is private, so no version history or repo can be retrieved`);
+        const normalizedModuleName = moduleName.startsWith('@') ? moduleName.slice(1) : moduleName;
+        return { repo: normalizedModuleName, versions: [] };
+      }
+
+      throw error;
+    }
   }
 };
