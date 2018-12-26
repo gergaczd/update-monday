@@ -3,6 +3,7 @@
 const emoji = require('node-emoji');
 const { distanceInWordsToNow } = require('date-fns');
 const format = require('../../lib/display-fomat');
+const semver = require('semver');
 
 class DisplayChanges {
 
@@ -48,7 +49,12 @@ class DisplayChanges {
     const latestIndex = versionHistory.findIndex(({ version }) => version === latestVersion);
     const currentIndex = versionHistory.findIndex(({ version }) => version === currentVersion);
 
-    return versionHistory.slice(latestIndex, currentIndex + 1);
+    return versionHistory
+      .slice(latestIndex, currentIndex + 1)
+      .filter(({ version }) => {
+        return semver.gte(version, currentVersion) && semver.lte(version, latestVersion);
+      })
+      .filter(({ version }) => !semver.prerelease(version));
   }
 }
 
