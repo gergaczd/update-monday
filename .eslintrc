@@ -1,0 +1,28 @@
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "no-var": ["error"],
+    "no-unused-vars": ["error", { "vars": "all", "args": "after-used" }],
+    "security/detect-object-injection": 0
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      },
+      "globals": {
+        "expect": true,
+        "sinon": true,
+        "sinonSandbox": true
+      }
+    }
+  ]
+}
