@@ -1,17 +1,18 @@
 {
   "name": "update-monday",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "npm audit && npm run lint && npm run test:single",
     "test:single": "mocha --opts ./mocha.opts './**/*.spec.js'",
     "test:watch": "npm t -- --watch",
-    "lint": "eslint './**/*.js'"
+    "lint": "eslint './**/*.js'",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gergaczd/update-monday.git"
+    "url": "https://github.com/gergaczd/update-monday.git"
   },
   "author": "",
   "license": "ISC",
@@ -41,7 +42,11 @@
     "chai": "4.2.0",
     "eslint": "5.11.0",
     "mocha": "5.2.0",
+    "semantic-release": "15.13.2",
     "sinon": "7.2.2",
     "sinon-chai": "3.3.0"
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }
