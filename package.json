@@ -47,6 +47,6 @@
     "sinon-chai": "3.3.0"
   },
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   }
 }
