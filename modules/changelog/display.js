@@ -39,8 +39,16 @@ class DisplayChanges {
   _displayChanges() {
     this.actualChanges.forEach((change) => {
       const relativeTime = distanceInWordsToNow(new Date(change.date));
-      console.log(format.version(`\t* Version: ${change.version} - ${relativeTime} ago`));
+      const versionTag = this._getVersionTag(change.version);
+      console.log(format.version(`\t* Version: ${change.version} - ${relativeTime} ago ${versionTag}`));
     });
+  }
+
+  _getVersionTag(version) {
+    const versionTag = version === this._options.currentVersion ? '(current)' :
+      (version === this._options.latestVersion ? '(latest)' : '');
+
+    return format.italic(versionTag)
   }
 
   get actualChanges() {
