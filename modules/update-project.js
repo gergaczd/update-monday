@@ -23,16 +23,18 @@ module.exports = async (folder, { install, open, test, store }) => {
 
   stepMarker.checkingChangelogs();
   const packagesWithUpdateInfo = await checkProject(packages, { open });
-  await packageJson.updatePackages(folder, packagesWithUpdateInfo);
+
+  const updateNeeded = packagesWithUpdateInfo.some(info => info.update);
+  updateNeeded && await packageJson.updatePackages(folder, packagesWithUpdateInfo);
 
   const { name: projectName } = await packageJson.readPackageJson(folder);
 
-  if (install) {
+  if (updateNeeded && install) {
     stepMarker.installingPackages();
     await command.installPackages(folder);
   }
 
-  if (install && test) {
+  if (updateNeeded && install && test) {
     let isTestSuccessed = false;
     do {
       stepMarker.runningTests();
