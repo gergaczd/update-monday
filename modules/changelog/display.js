@@ -26,10 +26,10 @@ class DisplayChanges {
   }
 
   _displayLinks() {
-    const { changelogFile, repositoryUrl } = this._options;
+    const { changelogFile, repositoryUrl, releasesUrl } = this._options;
 
     console.log(`   - Repository: ${format.link(repositoryUrl)}`);
-    console.log(`   - Releases: ${format.link(`${repositoryUrl}/releases`)}`);
+    console.log(`   - Releases: ${format.link(releasesUrl)}`);
 
     if (changelogFile) {
       console.log(`   - Changelog: ${format.link(changelogFile)}`);

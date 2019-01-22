@@ -32,17 +32,26 @@ module.exports = class Changelog {
       latestVersion: versions.latest,
       versionHistory: this._getVersionHistory(name),
       repositoryUrl: this._getRepositoryUrl(name),
+      releasesUrl: this._getReleasesUrl(name),
       changelogFile: this._getChangelogFile(name)
     });
   }
 
   openChangelogFile(name) {
     const changelogFile = this._getChangelogFile(name);
-    changelogFile && opn(changelogFile, { wait: false });
+    if (changelogFile) {
+      opn(changelogFile, { wait: false })
+    } else {
+      opn(this._getReleasesUrl(name), { wait: false });
+    }
   }
 
   _getRepositoryUrl(packageName) {
     return this._changelogs[packageName].project.repository;
+  }
+
+  _getReleasesUrl(name) {
+    return `${this._getRepositoryUrl(name)}/releases`;
   }
 
   _getVersionHistory(packageName) {
