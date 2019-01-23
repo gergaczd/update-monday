@@ -2,11 +2,11 @@
 
 const semver = require('semver');
 
-module.exports = (versions, versionsToMatch) => {
+module.exports = (givenVersions, versionsToMatch) => {
   return versionsToMatch.filter(({ newVersion, oldVersion }) => {
-    const newVersionIsLessOrEqual = semver.lte(versions.newVersion, newVersion);
-    const oldVersionIsGreaterOrEqual = semver.gte(versions.oldVersion, oldVersion);
+    const intersectFromOldPerspective = semver.lt(givenVersions.oldVersion, newVersion);
+    const intersectFromNewPerspective = semver.gte(givenVersions.newVersion, oldVersion);
 
-    return newVersionIsLessOrEqual && oldVersionIsGreaterOrEqual;
+    return intersectFromOldPerspective && intersectFromNewPerspective;
   });
 };

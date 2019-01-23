@@ -4,7 +4,7 @@ const Changelog = require('./changelog/changelog');
 const question = require('./question');
 const { showUpdateHistoryForPackage } = require('./update-history');
 
-module.exports = async (packages, { open }) => {
+module.exports = async (packages, { open, projectName }) => {
   const changelog = new Changelog(packages);
   await changelog.requestChanges();
 
@@ -14,7 +14,7 @@ module.exports = async (packages, { open }) => {
     changelog.displayChanges(packageToCheck);
     open && changelog.openChangelogFile(packageToCheck.name);
 
-    showUpdateHistoryForPackage(packageToCheck);
+    showUpdateHistoryForPackage(packageToCheck, projectName);
 
     const answer = await question.shouldUpdatePackage(packageToCheck);
 

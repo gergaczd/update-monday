@@ -83,18 +83,19 @@ describe('PackageRegistry', () => {
       expect(matchingEntries).to.deep.equal([storedMetaInfo]);
     });
 
-    it('should not return the meta if the stored new version is older', () => {
+    it('should return the meta if the stored new version is older', () => {
       const date = stubDate();
       const metaInfoToStore = createMetaInfo({ oldVersion, newVersion: olderNewVersion });
       const currentMetaInfo = createMetaInfo({ oldVersion, newVersion });
+      const storedMetaInfo = { ...metaInfoToStore, date };
 
-      stubStoreMethod('get').returns([{ ...metaInfoToStore, date }]);
+      stubStoreMethod('get').returns([storedMetaInfo]);
       stubStoreMethod('has').returns(true);
 
       const matchingEntries = PackageRegistry
         .getMatchingRegistration(packageName, currentMetaInfo);
 
-      expect(matchingEntries).to.be.empty;
+      expect(matchingEntries).to.deep.equal([storedMetaInfo]);
     });
 
     it('should return the meta if the stored new version is greater', () => {
@@ -110,6 +111,22 @@ describe('PackageRegistry', () => {
         .getMatchingRegistration(packageName, currentMetaInfo);
 
       expect(matchingEntries).to.deep.equal([storedMetaInfo]);
+    });
+
+    it('should not return the meta if the stored version does not have any intersect', () => {
+      const date = stubDate();
+      const olderMetaInfo = createMetaInfo({ oldVersion: '1.0.0', newVersion: '1.0.1' });
+      const newerMetaInfo = createMetaInfo({ oldVersion: '3.0.0', newVersion: '3.2.2' });
+      const currentMetaInfo = createMetaInfo({ oldVersion, newVersion });
+      const storedMetaInfo = [{ ...olderMetaInfo, date }, { ...newerMetaInfo, date}];
+
+      stubStoreMethod('get').returns(storedMetaInfo);
+      stubStoreMethod('has').returns(true);
+
+      const matchingEntries = PackageRegistry
+        .getMatchingRegistration(packageName, currentMetaInfo);
+
+      expect(matchingEntries).to.be.empty;
     });
   });
 });

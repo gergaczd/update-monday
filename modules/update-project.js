@@ -22,12 +22,11 @@ module.exports = async (folder, { install, open, test, store }) => {
   listPackages(packages);
 
   stepMarker.checkingChangelogs();
-  const packagesWithUpdateInfo = await checkProject(packages, { open });
+  const { name: projectName } = await packageJson.readPackageJson(folder);
+  const packagesWithUpdateInfo = await checkProject(packages, { open, projectName });
 
   const updateNeeded = packagesWithUpdateInfo.some(info => info.update);
   updateNeeded && await packageJson.updatePackages(folder, packagesWithUpdateInfo);
-
-  const { name: projectName } = await packageJson.readPackageJson(folder);
 
   if (updateNeeded && install) {
     stepMarker.installingPackages();
