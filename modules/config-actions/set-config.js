@@ -1,9 +1,8 @@
 'use strict';
 
-const questions = require('../../modules/question');
+const questions = require('../question');
 const configRegistry = require('../../store/config-registry');
 
-//folders
 module.exports = async () => {
   console.log('You can overwrite here the default config. No worries you will be always able to modify this even for only one project before starting the script.');
 

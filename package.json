@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm audit && npm run lint && npm run test:single",
     "test:single": "mocha --opts ./mocha.opts './**/*.spec.js'",
-    "test:watch": "npm t -- --watch",
+    "test:watch": "npm run test:single -- --watch",
     "lint": "eslint './**/*.js'",
     "semantic-release": "semantic-release"
   },
@@ -40,9 +40,11 @@
   },
   "devDependencies": {
     "chai": "4.2.0",
+    "chai-subset": "1.6.0",
     "eslint": "5.11.0",
     "mocha": "5.2.0",
-    "semantic-release": "15.13.2",
+    "nock": "10.0.6",
+    "semantic-release": "15.13.12",
     "sinon": "7.2.2",
     "sinon-chai": "3.3.0"
   },

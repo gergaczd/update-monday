@@ -10,37 +10,37 @@ module.exports = {
 
   async shouldRollbackUpdate() {
     const message = `   Do you want to revert the update`;
-    return await this._getToggleResult({ message });
+    return await this._getToggleResult('rollback', { message });
   },
 
   async shouldRunTestsAgain() {
     const message = `   Tests are failing! Do you want to run tests again`;
-    return await this._getToggleResult({ message, initial: false });
+    return await this._getToggleResult('test', { message, initial: false });
   },
 
   async shouldStorePackageUpdateByDefault({ initial = false } = {}) {
     const message = 'Store package updates by default';
-    return await this._getToggleResult({ message, initial });
+    return await this._getToggleResult('store-setup', { message, initial });
   },
 
   async shouldInstallPackagesByDefault({ initial = false } = {}) {
     const message = 'Install packages after update by default';
-    return await this._getToggleResult({ message, initial });
+    return await this._getToggleResult('install-setup', { message, initial });
   },
 
   async shouldOpenChangelogByDefault({ initial = false } = {}) {
     const message = 'Open changelog in browser by default';
-    return await this._getToggleResult({ message, initial });
+    return await this._getToggleResult('open-setup', { message, initial });
   },
 
   async shouldRunTestsByDefault({ initial = false } = {}) {
     const message = 'Run tests after installing packages by default';
-    return await this._getToggleResult({ message, initial });
+    return await this._getToggleResult('test-setup', { message, initial });
   },
 
-  async _getToggleResult(options = {}) {
-    const { question } = await this._togglePrompt({ ...options, name: 'question' });
-    return question;
+  async _getToggleResult(name, options = {}) {
+    const { [name]: response } = await this._togglePrompt({ ...options, name });
+    return response;
   },
 
   async _togglePrompt(options = {}) {
