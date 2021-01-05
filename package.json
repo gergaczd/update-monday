@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/gergaczd/update-monday#readme",
   "dependencies": {
-    "axios": "0.18.0",
+    "axios": "0.21.1",
     "chalk": "2.4.1",
     "configstore": "4.0.0",
     "date-fns": "1.29.0",
